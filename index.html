@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#102b29">
+  <title>永固車廂廠｜為每一程，造好每一廂</title>
+  <meta name="description" content="永固車廂廠，提供貨車車廂訂造、尾板加裝、改裝維修、貨車零件及配套。由量度到交車，按實際運輸需要設計。">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="images/truck-film-first-frame.webp" as="image">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
+  <script src="config.js" defer></script>
+  <script src="hero-film.js" defer></script>
+  <script src="hero-scan.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#services">跳到主要內容</a>
+  <header class="site-header" id="header">
+    <a class="brand" href="#top" aria-label="永固車廂廠首頁"><span class="brand-mark" aria-hidden="true">永</span><span>永固車廂廠<small>CUSTOM TRUCK BODY WORKS</small></span></a>
+    <nav class="desktop-nav" aria-label="主要導覽">
+      <a href="#services">服務</a><a href="#products">車廂配置</a><a href="#process">製作流程</a><a href="#gallery">配置展示</a>
+    </nav>
+    <a class="button button-lime nav-cta" href="#contact">查詢報價 <span aria-hidden="true">↗</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-controls="mobileMenu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu" hidden inert>
+    <nav aria-label="手機導覽"><a href="#services">服務 <span>01</span></a><a href="#products">車廂配置 <span>02</span></a><a href="#process">製作流程 <span>03</span></a><a href="#gallery">配置展示 <span>04</span></a><a href="#contact">聯絡查詢 <span>05</span></a></nav>
+    <p class="mono">BUILT AROUND YOUR BUSINESS.</p>
+  </div>
+  <main id="top">
+    <section class="hero" id="hero" aria-label="永固車廂製作介紹">
+      <div class="hero-stage">
+        <div class="hero-visual" aria-hidden="true">
+          <div class="truck-frame">
+            <img class="hero-poster" src="images/truck-film-first-frame.webp" width="1672" height="941" fetchpriority="high" alt="">
+            <div class="xray"><div class="xray-box"><img class="xray-img" src="images/truck-film-first-frame.webp" width="1672" height="941" alt=""><svg class="hero-wires" viewBox="0 0 1672 941"></svg></div></div>
+            <div class="scan-beam"></div>
+            <svg class="hero-dims" viewBox="0 0 1672 941"></svg>
+          </div>
+        </div>
+        <div class="hero-bgfx" id="heroBgfx" aria-hidden="true"></div>
+        <canvas class="hero-3d" id="hero3d" aria-hidden="true"></canvas>
+        <div class="hero-flash" id="heroFlash" aria-hidden="true"></div>
+        <div class="hero-vignette" aria-hidden="true"></div>
+        <div class="hero-3d-labels" id="hero3dLabels" aria-hidden="true"></div>
+        <div class="hero-intro"><span class="mono">PURPOSE BUILT. ROAD READY.</span><h1>為每一程，<br class="mobile-only">造好每一廂。</h1></div>
+        <div class="hero-message message-one" aria-hidden="true"><span class="mono">01 / BUILT AROUND YOU</span><p>從每一吋結構，<br>配合每一種需要。</p></div>
+        <div class="hero-message message-two" aria-hidden="true"><span class="mono">02 / EVERY DETAIL MATTERS</span><p>讓細節，<br>成為每日的可靠。</p></div>
+        <div class="hero-message message-three" aria-hidden="true"><span class="mono">03 / FROM WORKSHOP TO ROAD</span><p>由量度到交車。<br>一路，全程跟進。</p><a class="button button-lime" href="#products" tabindex="-1">探索車廂配置 <span aria-hidden="true">↗</span></a></div>
+        <div class="hero-bottom"><span class="mono hero-scroll-hint">SCROLL TO EXPLORE <i></i></span><span class="hero-caption">車廂視覺示意</span><a class="skip-intro" href="#services">直接睇服務 <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-timeline" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <section class="trust-section section-pad">
+      <div class="container"><p class="eyebrow reveal">BUILT FOR THE WAY YOU WORK</p><h2 class="section-title reveal">不同生意。<br>同樣需要一個可靠車廂。</h2>
+        <div class="industry-grid reveal"><span>物流運輸<small>LOGISTICS</small></span><span>家具搬運<small>MOVING</small></span><span>建材五金<small>BUILDING SUPPLIES</small></span><span>倉庫零售<small>WAREHOUSING</small></span><span>機械設備<small>EQUIPMENT</small></span></div>
+      </div>
+    </section>
+
+    <section class="section-pad services-section" id="services">
+      <div class="container"><div class="section-head reveal"><p class="eyebrow">START WITH WHAT YOU NEED</p><h2 class="section-title">由一個需要開始。<br>找到適合你的方案。</h2></div>
+        <div class="service-grid">
+          <article class="service-card reveal"><span class="mono">01 / REPAIR & REFIT</span><h3>維修，延續每一程。</h3><p>車門、地板、車廂結構需要修整？先了解現況，再一齊決定合適的維修或改裝方案。</p><div class="service-image"><img class="illo" src="images/illustrations/service-repair.svg" width="660" height="400" loading="lazy" alt="車廂維修示意圖：更換側板、門鉸維修及地板修整"></div><a href="#contact" class="pill-link" data-enquiry="車廂維修／改裝">查詢維修改裝 <span>↗</span></a></article>
+          <article class="service-card reveal"><span class="mono">02 / CUSTOM TRUCK BODIES</span><h3>訂造，配合你的工作。</h3><p>由車廂尺寸、物料到開門方式，按貨物、裝卸習慣及車輛條件，規劃每一個細節。</p><div class="service-image"><img class="illo" src="images/illustrations/service-custom.svg" width="660" height="400" loading="lazy" alt="車廂爆炸示意圖：頂板、側板、尾門及地板"></div><a href="#products" class="pill-link">探索訂造配置 <span>↗</span></a></article>
+          <article class="service-card reveal"><span class="mono">03 / FLEET SUPPORT</span><h3>車隊，有人全程跟進。</h3><p>由新車廂到日常維修、零件配套，整合車隊不同階段的需要，減少逐項尋找供應商。</p><div class="service-image"><img class="illo" src="images/illustrations/service-fleet.svg" width="660" height="400" loading="lazy" alt="車隊示意圖：新車廂訂造、日常維修保養及零件配套"></div><a href="#contact" class="pill-link" data-enquiry="車隊合作">洽談車隊需要 <span>↗</span></a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section section-pad" id="products">
+      <div class="container"><div class="section-head reveal"><p class="eyebrow">ONE TRUCK. YOUR POSSIBILITIES.</p><h2 class="section-title">每一個配置，<br>都有它的用途。</h2><p class="section-sub">從車廂本體，到每一次裝卸。選擇你想了解的部分。</p></div>
+        <div class="product-controls"><div class="tab-list" role="tablist" aria-label="車廂配置"><button id="product-tab-0" role="tab" aria-selected="true" aria-controls="product-panel" data-product="0">01 訂製密斗</button><button id="product-tab-1" role="tab" aria-selected="false" aria-controls="product-panel" data-product="1" tabindex="-1">02 升降尾板</button><button id="product-tab-2" role="tab" aria-selected="false" aria-controls="product-panel" data-product="2" tabindex="-1">03 側門及改裝</button></div><div class="arrows"><button id="productPrev" aria-label="上一個配置">←</button><button id="productNext" aria-label="下一個配置">→</button></div></div>
+        <div class="product-panel" id="product-panel" role="tabpanel" aria-labelledby="product-tab-0" tabindex="0"><div class="product-visual"><img id="productImage" class="illo" src="images/illustrations/product-box.svg" width="1000" height="860" loading="lazy" alt="密斗車廂剖面示意圖：鋁質外板、廂骨、地板及尾門"><span class="image-label mono">CONFIGURATION / 01</span><span class="visual-note">配置示意</span></div><div class="product-copy"><p class="eyebrow" id="productLabel">CUSTOM BOX BODY</p><h3 id="productTitle">一個車廂。<br>按你的需要而造。</h3><p id="productDescription">鋁質或鐵質車廂，配合車架、貨物尺寸及日常用途。從開門方式到內部間隔，逐項確認合適配置。</p><ul id="productFeatures"><li>物料與尺寸選擇</li><li>開門與裝卸安排</li><li>地板及內部配置</li></ul><a class="text-link" href="#configure">組合你的配置 <span>↗</span></a></div></div>
+      </div>
+    </section>
+
+    <section class="process-section" id="process">
+      <div class="container process-heading"><p class="eyebrow reveal">FROM FIRST MEASURE TO FINAL HANDOVER</p><h2 class="section-title reveal">一輛貨車。<br>四個階段，全程跟進。</h2></div>
+      <div class="process-scroll" id="processScroll"><div class="process-sticky container"><div class="process-copy"><div class="process-top"><span class="mono">THE MAKING OF YOUR TRUCK BODY</span><span class="process-number" id="processNumber" aria-hidden="true">01</span></div><div class="process-tabs" role="tablist" aria-label="製作階段"><button role="tab" id="process-tab-0" aria-selected="true" aria-controls="process-panel" data-step="0">01 <span>量度</span></button><button role="tab" id="process-tab-1" aria-selected="false" aria-controls="process-panel" data-step="1" tabindex="-1">02 <span>設計</span></button><button role="tab" id="process-tab-2" aria-selected="false" aria-controls="process-panel" data-step="2" tabindex="-1">03 <span>製作</span></button><button role="tab" id="process-tab-3" aria-selected="false" aria-controls="process-panel" data-step="3" tabindex="-1">04 <span>交車</span></button></div><div id="process-panel" role="tabpanel" aria-labelledby="process-tab-0" tabindex="0"><h3 id="processTitle">由量準每一吋開始。</h3><p id="processDescription">了解車款、車架、貨物及裝卸方式，再核對尺寸與現有條件，為訂造方案打好基礎。</p></div><a class="text-link" href="#contact">講低你的需要 <span>↗</span></a></div><div class="process-visual" id="processVisual"><img id="processImage" class="illo" src="images/illustrations/process-measure.svg" width="900" height="900" loading="lazy" alt="量度示意圖：車架長度、軸距及車架高度"><div class="measurement-overlay" aria-hidden="true"><span class="measure-x"></span><span class="measure-y"></span><span class="crosshair crosshair-a"></span><span class="crosshair crosshair-b"></span></div><span class="process-image-label mono" id="processImageLabel">01 / MEASURE</span><span class="visual-note">製作概念示意</span></div></div></div>
+    </section>
+
+    <section class="configure-section section-pad" id="configure"><div class="container"><div class="section-head reveal"><p class="eyebrow">MAKE IT YOURS</p><h2 class="section-title">先選配置。<br>再傾合適方案。</h2><p class="section-sub">幾個簡單選擇，幫我哋更快了解你的需要。實際報價按尺寸、物料及施工要求確認。</p></div><div class="config-grid reveal"><form class="config-form" id="configForm"><label>貨車類別<select name="tonnage" id="configTonnage"><option>未確定，想先查詢</option><option>5.5 噸或以下</option><option>5.5 噸以上</option></select></label><label>車廂物料<select name="material" id="configMaterial"><option>想聽取建議</option><option>鋁質車廂</option><option>鐵質車廂</option></select></label><fieldset><legend>希望加入的配置</legend><label class="check-row"><span>升降尾板<small>配合貨物裝卸</small></span><input type="checkbox" name="tailLift"><span class="switch" aria-hidden="true"></span></label><label class="check-row"><span>側門及貨架<small>整理貨物、方便上落</small></span><input type="checkbox" name="sideDoor"><span class="switch" aria-hidden="true"></span></label></fieldset></form><div class="config-summary"><div class="summary-top"><span class="mono">YOUR BUILD / 配置摘要</span><span class="status-dot" aria-hidden="true"></span></div><h3>為你的工作，<br>準備好下一步。</h3><dl id="configSummary"><div><dt>貨車</dt><dd>未確定，想先查詢</dd></div><div><dt>物料</dt><dd>想聽取建議</dd></div><div><dt>附加配置</dt><dd>暫未選擇</dd></div></dl><a class="button button-lime" href="#contact" id="useConfiguration">以此配置查詢 <span>↗</span></a><p class="small-note">配置會帶入下方查詢表格，毋須重複輸入。</p></div></div></div></section>
+
+    <section class="accessory-section section-pad" id="accessories"><div class="container"><div class="split-heading reveal"><div><p class="eyebrow">BEYOND THE TRUCK BODY</p><h2 class="section-title">配套，一併照顧。</h2></div><p>除了車廂訂造，亦可查詢<br>零件、包裝耗材及叉車配套。</p></div><div class="accessory-grid"><a class="accessory-card reveal" href="#contact" data-enquiry="貨車零件"><img src="images/ph-parts.jpg" width="600" height="450" loading="lazy" alt="門鉸、門鎖與燈具示意"><div><h3>貨車零件</h3><span aria-hidden="true">↗</span></div><p>門鉸・門鎖・燈具</p></a><a class="accessory-card reveal" href="#contact" data-enquiry="拉伸膜"><img src="images/ph-film.jpg" width="600" height="450" loading="lazy" alt="拉伸膜產品示意"><div><h3>拉伸膜</h3><span aria-hidden="true">↗</span></div><p>包裝耗材・規格查詢</p></a><a class="accessory-card reveal" href="#contact" data-enquiry="叉車及配件"><img src="images/ph-fork.jpg" width="600" height="450" loading="lazy" alt="叉車配置示意"><div><h3>叉車及配件</h3><span aria-hidden="true">↗</span></div><p>車款・零件・配套</p></a></div></div></section>
+
+    <section class="gallery-section" id="gallery"><div class="gallery-image"><img src="images/workshop-gallery.webp" width="1672" height="941" loading="lazy" alt="廠房內車廂尾門、鋁質內壁及組裝細節概念示意"></div><div class="container gallery-content"><p class="eyebrow">BUILT WITH PURPOSE</p><h2>好車廂，<br>由了解你的工作開始。</h2><a class="button button-white" href="#configure">探索適合的配置 <span>↗</span></a><p class="gallery-disclaimer">本頁圖片為配置及製作概念示意，並非已交付工程紀錄。</p></div></section>
+
+    <section class="contact-section section-pad" id="contact"><div class="container contact-grid"><div class="contact-copy reveal"><p class="eyebrow">LET’S BUILD SOMETHING THAT WORKS</p><h2 class="section-title">你的下一個車廂，<br>由呢度開始。</h2><p class="section-sub">話畀我哋知車款、用途同需要。<br>有相片、尺寸或者初步構思，就更容易傾。</p><div class="contact-methods" id="contactMethods"></div><p class="contact-availability" id="contactAvailability">聯絡資料更新中。你可以先整理並複製查詢內容。</p><div class="contact-checks"><span>01 了解運輸需要</span><span>02 確認車輛條件</span><span>03 商討訂造方案</span></div></div><form class="contact-form reveal" id="enquiryForm"><div class="two-col"><label>你的稱呼 <span aria-hidden="true">*</span><input name="name" autocomplete="name" required maxlength="80"></label><label>聯絡電話 <span aria-hidden="true">*</span><input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label></div><label>查詢項目<select name="type" id="enquiryType"><option>訂製貨車車廂</option><option>升降尾板</option><option>車廂維修／改裝</option><option>車隊合作</option><option>貨車零件</option><option>拉伸膜</option><option>叉車及配件</option><option>其他查詢</option></select></label><label>車款／數量<input name="spec" placeholder="例如：貨車型號、現有車廂尺寸" maxlength="160"></label><label>詳細需要<textarea name="message" id="enquiryMessage" rows="4" placeholder="你平時運送甚麼？希望改善哪些地方？" maxlength="2000"></textarea></label><button class="button button-dark" type="submit" id="sendEnquiry">複製查詢內容 <span>↗</span></button><p class="small-note" id="formHelp">只會整理你填寫的內容，不會自動發送。</p><p class="form-status" id="formStatus" role="status" aria-live="polite"></p><div id="copyFallback" hidden><label>查詢內容<textarea id="copyText" readonly rows="6"></textarea></label><p class="small-note">請選取並複製以上內容。</p></div></form></div></section>
+
+    <section class="faq-section section-pad" id="faq"><div class="container faq-grid"><div><p class="eyebrow">GOOD TO KNOW</p><h2 class="section-title">開始之前，<br>你可能想問。</h2></div><div class="faq-list"><details><summary>查詢報價前，要準備甚麼資料？<span aria-hidden="true">+</span></summary><p>提供車款、車廂尺寸、用途及所需配置，有現況照片會更方便了解。未有完整資料亦可以先整理你的需要。</p></details><details><summary>舊車廂可以維修或改裝嗎？<span aria-hidden="true">+</span></summary><p>可以先查詢。是否適合維修、加門、加貨架或更換部件，需要按現有結構及實際狀況評估。</p></details><details><summary>可以加裝升降尾板嗎？<span aria-hidden="true">+</span></summary><p>需先核對車架、載重、安裝空間及用途，再確認合適的尾板配置。</p></details><details><summary>訂造費用及交車時間點樣確認？<span aria-hidden="true">+</span></summary><p>費用及製作時間視乎尺寸、物料、配置與排期。確認方案時，應一併確認報價、交付安排及相關條款。</p></details><details><summary>圖中配置都可以直接訂造嗎？<span aria-hidden="true">+</span></summary><p>圖片用作配置及設計概念參考，並非固定產品規格。實際可行方案以車輛條件及雙方確認的設計為準。</p></details></div></div></section>
+  </main>
+  <footer><div class="container"><div class="footer-callout"><p class="eyebrow">READY FOR YOUR NEXT JOURNEY.</p><h2>造好每一廂。<br>走好每一程。</h2><a class="button button-lime" href="#contact">開始你的查詢 <span>↗</span></a></div><div class="footer-bottom"><a class="brand" href="#top"><span class="brand-mark">永</span><span>永固車廂廠<small>TRUCK BODY WORKS</small></span></a><nav aria-label="頁尾導覽"><a href="#products">車廂配置</a><a href="#process">製作流程</a><a href="#contact">聯絡查詢</a><a href="#faq">常見問題</a></nav><span class="copyright">© <span id="year">2026</span> 永固車廂廠</span></div></div></footer>
+  <a class="mobile-contact" id="mobileContact" href="#contact"><span>查詢你的車廂方案</span><span>聯絡查詢 ↗</span></a>
+  <noscript><style>.reveal{opacity:1;transform:none}.hero{height:100svh}.hero-intro{opacity:1}.hero-photo-road{opacity:1}.hero-message{display:none}.process-scroll{height:auto}.process-sticky{position:relative}.product-controls,.process-tabs,.config-grid{display:none}.hero-scroll-hint{display:none}</style></noscript>
+</body>
+</html>

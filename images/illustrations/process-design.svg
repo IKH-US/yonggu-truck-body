@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900">
+<defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#edf1ea" stroke-width="1"/></pattern><style>
+.o{fill:none;stroke:#123230;stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round}
+.s{fill:none;stroke:#5f786c;stroke-width:2.1;stroke-linejoin:round;stroke-linecap:round}
+.h{fill:none;stroke:#aebdb3;stroke-width:1.6}
+.d{fill:none;stroke:#5f786c;stroke-width:2.2;stroke-dasharray:11.2 9.6;stroke-linecap:round}
+.f{fill:#fbfcf9;stroke:#123230;stroke-width:3.5;stroke-linejoin:round}
+.f2{fill:#edf1ea;stroke:#123230;stroke-width:3.5;stroke-linejoin:round}
+.sh{fill:#dce4d9;stroke:#123230;stroke-width:3.5;stroke-linejoin:round}
+.fn{fill:#edf1ea;stroke:none}
+.ink{fill:#123230}
+.lime{fill:#c2ff4c;stroke:#123230;stroke-width:2.9;stroke-linejoin:round}
+.lf{fill:rgba(194,255,76,.42);stroke:#6f9a1c;stroke-width:3.2;stroke-linejoin:round}
+.dim{fill:none;stroke:#6f9a1c;stroke-width:2.9;stroke-linecap:round}
+.ext{fill:none;stroke:#6f9a1c;stroke-width:1.6;stroke-dasharray:6.4 6.4}
+text{paint-order:stroke;stroke:#f3f5f0;stroke-width:6.4px;stroke-linejoin:round}
+.t{font:500 20.8px 'IBM Plex Mono',Consolas,Menlo,monospace;letter-spacing:.1em;fill:#5f786c}
+.tb{font:600 22.4px 'IBM Plex Mono',Consolas,Menlo,monospace;letter-spacing:.08em;fill:#123230}
+.tc{font:500 24px 'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;fill:#123230}
+.tcs{font:500 20.8px 'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;fill:#5f786c}
+.tl{font:600 20.8px 'IBM Plex Mono',Consolas,Menlo,monospace;letter-spacing:.1em;fill:#6f9a1c}
+</style></defs>
+<rect class="f" x="96" y="126" width="744" height="672" rx="6"/><rect x="98" y="128" width="740" height="668" fill="url(#grid)"/><rect class="h" x="116" y="146" width="704" height="632"/><text class="tb" x="210" y="186" text-anchor="start">PLAN</text><text class="tcs" x="284" y="186" text-anchor="start">平面</text><rect class="o" x="210" y="230" width="480" height="160"/><rect class="lf" x="460" y="230" width="210" height="44"/><text class="tl" x="565" y="258" text-anchor="middle">SHELF</text><line class="d" x1="450" y1="230" x2="450" y2="390"/><path class="d" d="M210,234 A76,76 0 0 0 134,310 M210,386 A76,76 0 0 1 134,310"/><line class="s" x1="210" y1="234" x2="134" y2="234"/><line class="s" x1="210" y1="386" x2="134" y2="386"/><rect class="lime" x="270" y="386" width="150" height="8"/><path class="dim" d="M280,416 H410 m-12,-8 l12,8 l-12,8"/><line class="dim" x1="210" y1="212" x2="690" y2="212"/><line class="dim" x1="210" y1="199.2" x2="210" y2="224.8"/><line class="dim" x1="690" y1="199.2" x2="690" y2="224.8"/><text class="tl" x="450" y="199.2" text-anchor="middle">L</text><line class="dim" x1="716" y1="230" x2="716" y2="390"/><line class="dim" x1="703.2" y1="230" x2="728.8" y2="230"/><line class="dim" x1="703.2" y1="390" x2="728.8" y2="390"/><text class="tl" x="746.4" y="310" text-anchor="middle" transform="rotate(-90 746.4 310)">W</text><text class="tb" x="210" y="464" text-anchor="start">SIDE</text><text class="tcs" x="284" y="464" text-anchor="start">側視</text><rect class="o" x="210" y="490" width="480" height="150"/><rect class="lf" x="270" y="502" width="150" height="138"/><line class="s" x1="216" y1="498" x2="216" y2="632"/><line class="s" x1="210" y1="630" x2="690" y2="630"/><line class="h" x1="510" y1="496" x2="510" y2="626"/><line class="h" x1="610" y1="496" x2="610" y2="626"/><line class="dim" x1="716" y1="490" x2="716" y2="640"/><line class="dim" x1="703.2" y1="490" x2="728.8" y2="490"/><line class="dim" x1="703.2" y1="640" x2="728.8" y2="640"/><text class="tl" x="746.4" y="565" text-anchor="middle" transform="rotate(-90 746.4 565)">H</text><rect class="o" x="576" y="690" width="244" height="88"/><line class="s" x1="576" y1="720" x2="820" y2="720"/><line class="s" x1="576" y1="750" x2="820" y2="750"/><line class="s" x1="700" y1="720" x2="700" y2="778"/><text class="t" x="590" y="712" text-anchor="start">DWG 02 · LAYOUT</text><text class="t" x="590" y="742" text-anchor="start">1:25</text><text class="t" x="714" y="742" text-anchor="start">REV A</text><text class="tcs" x="590" y="771" text-anchor="start">設計確認</text><text class="t" x="714" y="771" text-anchor="start">CHECKED</text><g transform="translate(150 762) rotate(-8)"><rect class="lime" x="0" y="-10" width="230" height="20" rx="3"/><path class="f" d="M230,-10 L262,0 L230,10 Z"/><path class="ink" d="M254,-2.5 L262,0 L254,2.5 Z"/><rect class="sh" x="-26" y="-10" width="26" height="20" rx="3"/></g>
+</svg>

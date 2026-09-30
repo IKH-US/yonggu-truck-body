@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 400" width="660" height="400">
+<defs><style>
+.o{fill:none;stroke:#123230;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.s{fill:none;stroke:#5f786c;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.h{fill:none;stroke:#aebdb3;stroke-width:1.4}
+.d{fill:none;stroke:#5f786c;stroke-width:1.9;stroke-dasharray:9.5 8.1;stroke-linecap:round}
+.f{fill:#fbfcf9;stroke:#123230;stroke-width:3;stroke-linejoin:round}
+.f2{fill:#edf1ea;stroke:#123230;stroke-width:3;stroke-linejoin:round}
+.sh{fill:#dce4d9;stroke:#123230;stroke-width:3;stroke-linejoin:round}
+.fn{fill:#edf1ea;stroke:none}
+.ink{fill:#123230}
+.lime{fill:#c2ff4c;stroke:#123230;stroke-width:2.4;stroke-linejoin:round}
+.lf{fill:rgba(194,255,76,.42);stroke:#6f9a1c;stroke-width:2.7;stroke-linejoin:round}
+.dim{fill:none;stroke:#6f9a1c;stroke-width:2.4;stroke-linecap:round}
+.ext{fill:none;stroke:#6f9a1c;stroke-width:1.4;stroke-dasharray:5.4 5.4}
+text{paint-order:stroke;stroke:#f3f5f0;stroke-width:5.4px;stroke-linejoin:round}
+.t{font:500 17.6px 'IBM Plex Mono',Consolas,Menlo,monospace;letter-spacing:.1em;fill:#5f786c}
+.tb{font:600 18.9px 'IBM Plex Mono',Consolas,Menlo,monospace;letter-spacing:.08em;fill:#123230}
+.tc{font:500 20.3px 'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;fill:#123230}
+.tcs{font:500 17.6px 'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;fill:#5f786c}
+.tl{font:600 17.6px 'IBM Plex Mono',Consolas,Menlo,monospace;letter-spacing:.1em;fill:#6f9a1c}
+</style></defs>
+<line class="o" x1="30" y1="318" x2="630" y2="318"/><g transform="translate(70 318) scale(0.92)"><rect class="f" x="20" y="-250" width="360" height="170"/><line class="h" x1="110" y1="-244" x2="110" y2="-86"/><line class="h" x1="200" y1="-244" x2="200" y2="-86"/><line class="h" x1="290" y1="-244" x2="290" y2="-86"/><rect class="lf" x="110" y="-250" width="90" height="170"/><line class="s" x1="20" y1="-241" x2="380" y2="-241"/><rect class="f2" x="20" y="-92" width="360" height="12"/><rect class="sh" x="22" y="-228" width="7" height="16"/><rect class="sh" x="22" y="-130" width="7" height="16"/><rect class="f2" x="30" y="-80" width="470" height="14"/><rect class="f2" x="22" y="-66" width="12" height="22"/><rect class="f2" x="250" y="-64" width="64" height="26" rx="6"/><path class="f" d="M392,-66 V-205 Q392,-218 405,-218 H478 Q496,-218 506,-202 L536,-142 Q540,-134 540,-124 V-80 Q540,-66 526,-66 Z"/><path class="sh" d="M474,-206 H500 L526,-152 H474 Z"/><line class="s" x1="470" y1="-150" x2="470" y2="-72"/><line class="o" x1="454" y1="-128" x2="464" y2="-128"/><rect class="sh" x="526" y="-114" width="12" height="12" rx="2"/><path class="f2" d="M518,-80 H546 V-62 H514 Z"/><line class="o" x1="540" y1="-196" x2="552" y2="-184"/><rect class="sh" x="548" y="-190" width="7" height="22" rx="2"/><path class="s" d="M84,-66 A46,46 0 0 1 176,-66"/><circle class="f2" cx="130" cy="-34" r="34"/><circle class="h" cx="130" cy="-34" r="25"/><circle class="f" cx="130" cy="-34" r="15"/><circle class="ink" cx="130" cy="-34" r="4"/><circle class="f2" cx="445" cy="-34" r="34"/><circle class="h" cx="445" cy="-34" r="25"/><circle class="f" cx="445" cy="-34" r="15"/><circle class="ink" cx="445" cy="-34" r="4"/></g><rect class="d" x="155.2" y="66" width="82.8" height="156.4"/><polyline class="s" points="212.6,166.2 462,52 491.7,52"/><circle class="lime" cx="212.6" cy="166.2" r="6.8"/><text class="tb" x="501.2" y="48" text-anchor="start">01 PANEL</text><text class="tcs" x="501.2" y="73.6" text-anchor="start">更換側板</text><polyline class="s" points="92.1,132.2 36,36 65.7,36"/><circle class="lime" cx="92.1" cy="132.2" r="6.8"/><text class="tb" x="75.2" y="32" text-anchor="start">02 HINGE</text><text class="tcs" x="75.2" y="57.6" text-anchor="start">門鉸維修</text><polyline class="s" points="134.4,238.9 36,356 65.7,356"/><circle class="lime" cx="134.4" cy="238.9" r="6.8"/><text class="tb" x="75.2" y="352" text-anchor="start">03 FLOOR</text><text class="tcs" x="75.2" y="377.6" text-anchor="start">地板修整</text><g transform="translate(606 228) rotate(-40) scale(.8)"><rect class="f2" x="-6" y="-2" width="12" height="70" rx="5"/><path class="f" d="M-17,-6 A18,18 0 1 1 17,-6 L8,-6 L8,-20 L-8,-20 L-8,-6 Z"/></g>
+</svg>
