@@ -47,9 +47,9 @@
   } else $$('.reveal').forEach(el => el.classList.add('is-visible'));
 
   const products = [
-    { label:'CUSTOM BOX BODY', title:'一個車廂。\n按你的需要而造。', text:'鋁質或鐵質車廂，配合車架、貨物尺寸及日常用途。從開門方式到內部間隔，逐項確認合適配置。', features:['物料與尺寸選擇','開門與裝卸安排','地板及內部配置'], image:'images/illustrations/product-box.svg', alt:'密斗車廂剖面示意圖：鋁質外板、廂骨、地板及尾門', style:'' },
-    { label:'TAIL LIFT SOLUTIONS', title:'上落重貨，\n多一份支援。', text:'按貨物重量、裝卸習慣與車輛條件，評估尾板配置及安裝方式。新車或現有貨車均可先查詢。', features:['安裝空間評估','載重與用途配合','現有車架檢查'], image:'images/illustrations/product-tail-lift.svg', alt:'升降尾板示意圖：平台由地面升至車廂地台高度', style:'' },
-    { label:'ACCESS & INTERIOR', title:'門與間隔，\n跟住工作方式改。', text:'側門、貨架、地板與車廂內部配置，按貨物種類及取放次序設計，讓每日工作更有條理。', features:['側門開口安排','內部貨架與間隔','地板與收邊配置'], image:'images/illustrations/product-side-door.svg', alt:'側門及內部示意圖：側門開口、分層貨架及地板收邊', style:'' }
+    { label:'CUSTOM BOX BODY', title:'一個車廂。\n按你的需要而造。', text:'鋁質或鐵質車廂，配合車架、貨物尺寸及日常用途。從開門方式到內部間隔，逐項確認合適配置。', features:['物料與尺寸選擇','開門與裝卸安排','地板及內部配置'], image:'images/product-box-photo.webp', alt:'訂製密斗寫實概念圖：鋁質車廂尾門及外板', style:'' },
+    { label:'TAIL LIFT SOLUTIONS', title:'上落重貨，\n多一份支援。', text:'按貨物重量、裝卸習慣與車輛條件，評估尾板配置及安裝方式。新車或現有貨車均可先查詢。', features:['安裝空間評估','載重與用途配合','現有車架檢查'], image:'images/product-tail-lift-photo.webp', alt:'升降尾板寫實概念圖：尾板平台、托盤及手動拖板車', style:'' },
+    { label:'ACCESS & INTERIOR', title:'門與間隔，\n配合工作方式調整。', text:'側門、貨架、地板與車廂內部配置，按貨物種類及取放次序設計，讓每日工作更有條理。', features:['側門開口安排','內部貨架與間隔','地板與收邊配置'], image:'images/product-side-door-photo.webp', alt:'側門配置寫實概念圖：側門開口及內部貨架', style:'' }
   ];
   let productIndex = 0;
   const productTabs = $$('[data-product]');
@@ -76,10 +76,10 @@
   $('#productNext').addEventListener('click', () => selectProduct(productIndex + 1));
 
   const steps = [
-    {title:'由量準每一吋開始。', text:'了解車款、車架、貨物及裝卸方式，再核對尺寸與現有條件，為訂造方案打好基礎。', image:'images/illustrations/process-measure.svg', alt:'量度示意圖：車架長度、軸距及車架高度', label:'MEASURE'},
-    {title:'先想清楚，再開始造。', text:'討論物料、開門方向、內部配置及預算，將實際用途轉化成清晰方案，再確認報價與製作安排。', image:'images/illustrations/process-design.svg', alt:'設計圖示意：車廂平面及側視佈局', label:'DESIGN'},
-    {title:'把每一個細節，做到位。', text:'按已確認方案安排車廂製作、組裝與配置安裝，留意接合、收邊及日後使用的便利。', image:'images/illustrations/process-build.svg', alt:'製作示意圖：角柱接合、鉚接位置及收邊', label:'BUILD'},
-    {title:'準備好，再出發。', text:'完成後一齊核對車廂及配置，確認使用方式、交付安排與後續跟進，迎接下一程工作。', image:'images/illustrations/process-handover.svg', alt:'交車示意圖：完成車輛及交車核對清單', label:'HANDOVER'}
+    {title:'由量準每一吋開始。', text:'了解車款、車架、貨物及裝卸方式，再核對尺寸與現有條件，為訂造方案打好基礎。', image:'images/process-measure-photo.webp', alt:'量度寫實概念圖：技師核對車架尺寸', label:'MEASURE'},
+    {title:'先想清楚，再開始造。', text:'討論物料、開門方向、內部配置及預算，將實際用途轉化成清晰方案，再確認報價與製作安排。', image:'images/process-design-photo.webp', alt:'設計寫實概念圖：車廂規劃圖及物料樣本', label:'DESIGN'},
+    {title:'把每一個細節，做到位。', text:'按已確認方案安排車廂製作、組裝與配置安裝，留意接合、收邊及日後使用的便利。', image:'images/process-build-photo.webp', alt:'製作寫實概念圖：技師鉚接鋁質車廂收邊', label:'BUILD'},
+    {title:'準備好，再出發。', text:'完成後共同核對車廂及配置，確認使用方式、交付安排與後續跟進，迎接下一程工作。', image:'images/process-handover-photo.webp', alt:'交車寫實概念圖：完成車輛及交付核對', label:'HANDOVER'}
   ];
   const processScroll = $('#processScroll'), processTabs = $$('[data-step]');
   let stepIndex = -1, manualStepUntilScroll = false;
@@ -117,24 +117,89 @@
   const whatsapp = /^\d{8,15}$/.test(business.whatsapp || '') ? business.whatsapp : '';
   const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(business.email || '') ? business.email : '';
   const contactMethods = $('#contactMethods');
+  const track = name => { try { window.plausible?.(name); window.gtag?.('event', name); } catch {} };
+  const analytics = business.analytics || {};
+  if (/^[\w.-]+\.[a-z]{2,}$/i.test(analytics.plausibleDomain || '')) {
+    window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+    const s = document.createElement('script'); s.defer = true; s.dataset.domain = analytics.plausibleDomain; s.src = 'https://plausible.io/js/script.js'; document.head.append(s);
+  }
+  if (/^G-[A-Z0-9]{6,}$/.test(analytics.ga4Id || '')) {
+    window.dataLayer = window.dataLayer || []; window.gtag = function () { window.dataLayer.push(arguments); };
+    const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + analytics.ga4Id; document.head.append(s);
+    window.gtag('js', new Date()); window.gtag('config', analytics.ga4Id);
+  }
+  if (business.siteUrl || business.phone || business.address) {
+    const ld = { '@context': 'https://schema.org', '@type': 'LocalBusiness', name: business.businessName || '永固車廂廠', description: document.querySelector('meta[name=description]')?.content || '' };
+    if (business.siteUrl) ld.url = business.siteUrl;
+    if (business.phone) ld.telephone = business.phone;
+    if (email) ld.email = email;
+    if (business.address) ld.address = { '@type': 'PostalAddress', streetAddress: business.address, addressCountry: 'HK' };
+    const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); document.head.append(s);
+  }
+  const cases = Array.isArray(business.cases) ? business.cases.filter(c => c && c.title && c.image) : [];
+  if (cases.length) {
+    const grid = $('#casesGrid');
+    cases.forEach(c => {
+      const card = document.createElement('article'); card.className = 'case-card';
+      const img = document.createElement('img'); img.src = c.image; img.alt = c.alt || c.title; img.loading = 'lazy'; img.width = 960; img.height = 600;
+      const h = document.createElement('h3'); h.textContent = c.title;
+      const dl = document.createElement('dl');
+      [['車型', c.vehicle], ['貨箱', c.size], ['配置', c.setup]].forEach(([k, v]) => { if (!v) return; const row = document.createElement('div'); const dt = document.createElement('dt'); dt.textContent = k; const dd = document.createElement('dd'); dd.textContent = v; row.append(dt, dd); dl.append(row); });
+      card.append(img, h, dl); grid.append(card);
+    });
+    $('#cases').hidden = false;
+  }
   function addContact(text, href) { const el = document.createElement(href ? 'a' : 'p'); el.textContent = text; if (href) el.href = href; contactMethods.append(el); }
   if (business.phone) addContact(business.phone, 'tel:' + business.phone.replace(/[^+\d]/g,''));
   if (whatsapp) addContact('WhatsApp 查詢 ↗', 'https://wa.me/' + whatsapp);
   if (email) addContact(email, 'mailto:' + email);
   if (business.address) addContact(business.address);
   if (business.hours) addContact(business.hours);
+  if (business.wechat) addContact('微信：' + business.wechat);
+  if (business.wechatQr) {
+    const qr = document.createElement('figure'); qr.className = 'wechat-qr';
+    const qrImg = document.createElement('img'); qrImg.src = business.wechatQr; qrImg.alt = '微信二維碼'; qrImg.width = 132; qrImg.height = 132; qrImg.loading = 'lazy';
+    const cap = document.createElement('figcaption'); cap.textContent = '掃描加入微信';
+    qr.append(qrImg, cap); contactMethods.append(qr);
+  }
   if (whatsapp || email) {
     $('#contactAvailability').hidden = true;
     $('#sendEnquiry').firstChild.textContent = whatsapp ? '在 WhatsApp 開啟查詢 ' : '以電郵開啟查詢 ';
     $('#formHelp').textContent = '將於 WhatsApp 或電郵開啟已整理的內容，由你確認後發送。';
-    if (whatsapp) { $('#mobileContact').href = 'https://wa.me/' + whatsapp; $('#mobileContact').lastElementChild.textContent = 'WhatsApp ↗'; }
+  }
+  const mcMain = $('#mcMain'), mcCall = $('#mcCall'), navCta = $('.nav-cta');
+  if (whatsapp) {
+    mcMain.href = 'https://wa.me/' + whatsapp; mcMain.textContent = 'WhatsApp 查詢'; mcMain.target = '_blank'; mcMain.rel = 'noopener noreferrer';
+    navCta.href = 'https://wa.me/' + whatsapp; navCta.target = '_blank'; navCta.rel = 'noopener noreferrer'; navCta.firstChild.textContent = 'WhatsApp 查詢 ';
+  }
+  if (business.phone) { mcCall.href = 'tel:' + business.phone.replace(/[^+\d]/g, ''); mcCall.hidden = false; }
+  const formCfg = business.form || {};
+  const useEndpoint = (formCfg.provider === 'formspree' && /^https:\/\/formspree\.io\/f\//.test(formCfg.endpoint || '')) || formCfg.provider === 'netlify';
+  if (useEndpoint) {
+    $('#sendEnquiry').firstChild.textContent = '提交查詢 ';
+    $('#contactAvailability').hidden = true;
+    $('#formHelp').textContent = '提交後，我們會按你留下的電話盡快回覆。';
+  }
+  $$('#mcMain,.nav-cta').forEach(a => a.addEventListener('click', () => track('contact_click')));
+  async function postEnquiry(data) {
+    if (formCfg.provider === 'formspree') { const r = await fetch(formCfg.endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: data }); return r.ok; }
+    const body = new URLSearchParams(); data.forEach((v, k) => body.append(k, v)); body.set('form-name', 'enquiry');
+    const r = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body }); return r.ok;
   }
   $('#enquiryForm').addEventListener('submit', async e => {
     e.preventDefault(); const form = e.currentTarget, data = new FormData(form);
-    const text = `你好，我想向永固車廂廠查詢：\n\n稱呼：${data.get('name')}\n聯絡電話：${data.get('phone')}\n項目：${data.get('type')}\n車款／數量：${data.get('spec') || '未填寫'}\n\n${data.get('message') || ''}`;
     const status = $('#formStatus');
-    if (whatsapp) { window.open('https://wa.me/' + whatsapp + '?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer'); status.textContent = '已開啟 WhatsApp 查詢，請檢查內容後自行發送。'; return; }
-    if (email) { location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('網站查詢：' + data.get('type')) + '&body=' + encodeURIComponent(text); status.textContent = '已要求開啟電郵程式，請檢查收件人及內容後發送。'; return; }
+    if (data.get('bot-field')) { status.textContent = '已收到你的查詢。'; form.reset(); return; }
+    const text = `你好，我想向永固車廂廠查詢：\n\n稱呼：${data.get('name')}\n聯絡電話：${data.get('phone')}\n項目：${data.get('type')}\n車款／數量：${data.get('spec') || '未填寫'}\n\n${data.get('message') || ''}`;
+    if (useEndpoint) {
+      const btn = $('#sendEnquiry'); btn.disabled = true; status.textContent = '正在提交…';
+      try {
+        if (await postEnquiry(data)) { status.textContent = '已收到你的查詢，我們會盡快以電話回覆。'; form.reset(); track('enquiry_submit'); btn.disabled = false; return; }
+        throw new Error('submit failed');
+      } catch { btn.disabled = false; status.textContent = '暫時未能提交，改為整理你的查詢內容。'; }
+    }
+    if (whatsapp) { window.open('https://wa.me/' + whatsapp + '?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer'); status.textContent = '已開啟 WhatsApp 查詢，請檢查內容後自行發送。'; track('enquiry_submit'); return; }
+    if (email) { location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('網站查詢：' + data.get('type')) + '&body=' + encodeURIComponent(text); status.textContent = '已要求開啟電郵程式，請檢查收件人及內容後發送。'; track('enquiry_submit'); return; }
     try { if (!navigator.clipboard) throw new Error('Clipboard unavailable'); await navigator.clipboard.writeText(text); status.textContent = '查詢內容已複製。聯絡資料更新後，可用來向永固查詢。'; $('#copyFallback').hidden = true; }
     catch { $('#copyFallback').hidden = false; $('#copyText').value = text; $('#copyText').focus(); $('#copyText').select(); status.textContent = '你可以手動複製下方已整理的查詢內容。'; }
   });
@@ -148,7 +213,9 @@
   let hero3d = null, heroVisible = true, warmed = false, last3dP = 1;
   const canvas3d = $('#hero3d'), flash3d = $('#heroFlash'), bgfx3d = $('#heroBgfx'), photoFrame = $('.truck-frame');
   const webglOk = () => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } };
-  if (!motionQuery.matches && !navigator.connection?.saveData && webglOk()) {
+  const q3d = new URLSearchParams(location.search).get('3d');
+  const lowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+  if (q3d !== 'off' && (q3d === 'on' || !lowEnd) && !motionQuery.matches && !navigator.connection?.saveData && webglOk()) {
     const start = () => import('./hero-3d.js').then(m => {
       heroScan?.render(0); photoFrame.style.transform = 'translate(-50%,-50%)';
       hero3d = m.createHero3D({ stage, canvas: canvas3d, labelsRoot: $('#hero3dLabels'), frameEl: photoFrame });

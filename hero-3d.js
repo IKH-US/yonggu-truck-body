@@ -1,6 +1,6 @@
 /* Scroll-driven 3D truck: real photo → glowing wireframe → exploded parts → reassembled → real photo.
-   Every dimension below was measured from images/truck-film-first-frame.webp (camera pose and scale solved from
-   the box side wall, tyre radii and cab outline), so at scroll 0 the wireframe sits exactly on the photographed truck.
+   Camera and proportions are aligned to images/truck-film-first-frame.webp.
+   Curved bodywork is an illustrative reconstruction from that image, not a measured CAD model.
    Truck frame: metres, ground y = 0, +X = front of the truck, +Z = the side facing the camera, X = 0 at the cab-side of the box. */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
@@ -77,15 +77,42 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
   const edgeCache = new Map();
   const boxEdges = (w, h, d) => { const k = [w, h, d].map(v => v.toFixed(3)).join(); let g = edgeCache.get(k); if (!g) { g = new THREE.EdgesGeometry(new THREE.BoxGeometry(w, h, d)); edgeCache.set(k, g); } return g; };
   const withEdges = (mesh, edgesGeo, lm = wireMat) => { mesh.add(new THREE.LineSegments(edgesGeo, lm)); return mesh; };
+  // Draw manufactured contours, never the triangulation of a curved surface.
+  const contour = (parent, points, closed = false) => {
+    const geometry = new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(...p)));
+    const line = closed ? new THREE.LineLoop(geometry, wireMat) : new THREE.Line(geometry, wireMat);
+    parent.add(line); return line;
+  };
+  const roundRect = (w, h, r) => {
+    const points = [];
+    [[w/2-r,h/2-r,0],[-w/2+r,h/2-r,90],[-w/2+r,-h/2+r,180],[w/2-r,-h/2+r,270]].forEach(([x,y,deg]) => {
+      for(let i=0;i<=10;i++){const a=(deg+i*9)*Math.PI/180;points.push([x+r*Math.cos(a),y+r*Math.sin(a)]);}
+    });
+    return points;
+  };
+  function roundedContours(mesh,w,h,d,r) {
+    // These six paths follow the actual flat-face/fillet boundaries of RoundedBoxGeometry.
+    for(const side of [-1,1]) {
+      contour(mesh,roundRect(w,h,r).map(([x,y])=>[x,y,side*(d/2-r)]),true);
+      contour(mesh,roundRect(w,d,r).map(([x,z])=>[x,side*(h/2-r),z]),true);
+      contour(mesh,roundRect(d,h,r).map(([z,y])=>[side*(w/2-r),y,z]),true);
+    }
+  }
   const box = (g, m, [w, h, d], [x, y, z], r = 0, rot) => {
-    const geo = r > 0 ? new RoundedBoxGeometry(w, h, d, 2, Math.min(r, Math.min(w, h, d) / 2 - .002)) : new THREE.BoxGeometry(w, h, d);
-    const mesh = withEdges(new THREE.Mesh(geo, m), boxEdges(w, h, d)); mesh.position.set(x, y, z);
+    const radius = Math.max(0, Math.min(r, Math.min(w,h,d)/2-.002));
+    const geo = radius > 0 ? new RoundedBoxGeometry(w,h,d,5,radius) : new THREE.BoxGeometry(w,h,d);
+    const mesh = new THREE.Mesh(geo,m);
+    if(radius>0) roundedContours(mesh,w,h,d,radius); else withEdges(mesh,boxEdges(w,h,d));
+    mesh.position.set(x, y, z);
     if (rot) mesh.rotation.set(rot[0] || 0, rot[1] || 0, rot[2] || 0);
     g.add(mesh); return mesh;
   };
-  const cyl = (g, m, r, len, [x, y, z], axis = 'y', seg = 24) => {
+  const cyl = (g, m, r, len, [x, y, z], axis = 'y', seg = 64) => {
+    seg = Math.max(64,seg);
     const geo = new THREE.CylinderGeometry(r, r, len, seg);
-    const mesh = withEdges(new THREE.Mesh(geo, m), new THREE.EdgesGeometry(geo, 20)); mesh.position.set(x, y, z);
+    const mesh = new THREE.Mesh(geo,m);
+    [-1,1].forEach(side=>contour(mesh,Array.from({length:64},(_,i)=>{const a=i*Math.PI/32;return [r*Math.cos(a),side*len/2,r*Math.sin(a)];}),true));
+    mesh.position.set(x, y, z);
     if (axis === 'x') mesh.rotation.z = Math.PI / 2; if (axis === 'z') mesh.rotation.x = Math.PI / 2;
     g.add(mesh); return mesh;
   };
@@ -103,6 +130,35 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
     geo.translate(0, 0, -depth / 2);
     const mesh = withEdges(new THREE.Mesh(geo, m), new THREE.EdgesGeometry(geo, 35)); g.add(mesh); return mesh;
   };
+  function curvedPanel(g,m,shape,depth,{bevel=.025,bow=0}={}) {
+    const geo = new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:bevel>0,bevelThickness:bevel,bevelSize:bevel,bevelSegments:6,curveSegments:24});
+    geo.translate(0,0,-depth/2);
+    const warp=(x,z)=>x+bow*Math.max(0,1-Math.pow(z/(depth/2+bevel),2))*smooth(clamp((x-.9)/1.3));
+    const attr=geo.attributes.position;
+    for(let i=0;i<attr.count;i++)attr.setX(i,warp(attr.getX(i),attr.getZ(i)));
+    geo.computeVertexNormals();
+    const mesh=new THREE.Mesh(geo,m);g.add(mesh);
+    const pts=shape.getPoints(28);
+    [-1,1].forEach(side=>{const z=side*depth/2;contour(mesh,pts.map(p=>[warp(p.x,z),p.y,z]),true);});
+    // A few cross-body seams show the curved front without exposing tessellation edges.
+    if(depth>.5) [0,.25,.5,.75].forEach(f=>{
+      const p=shape.getPoint(f);
+      contour(mesh,Array.from({length:33},(_,i)=>{const z=depth*(i/32-.5);return [warp(p.x,z),p.y,z];}));
+    });
+    return mesh;
+  }
+  function roundedPolygon(points,r=.07) {
+    const shape=new THREE.Shape();
+    points.forEach((p,i)=>{
+      const prev=points[(i+points.length-1)%points.length],next=points[(i+1)%points.length];
+      const a=Math.min(r,Math.hypot(prev[0]-p[0],prev[1]-p[1])*.3),b=Math.min(r,Math.hypot(next[0]-p[0],next[1]-p[1])*.3);
+      const la=Math.hypot(prev[0]-p[0],prev[1]-p[1]),lb=Math.hypot(next[0]-p[0],next[1]-p[1]);
+      const q=[p[0]+(prev[0]-p[0])*a/la,p[1]+(prev[1]-p[1])*a/la];
+      if(i===0)shape.moveTo(...q);else shape.lineTo(...q);
+      shape.quadraticCurveTo(...p,p[0]+(next[0]-p[0])*b/lb,p[1]+(next[1]-p[1])*b/lb);
+    });
+    shape.closePath();return shape;
+  }
 
   /* headlight flare sprites */
   const flareTexture = () => { const c = document.createElement('canvas'); c.width = 256; c.height = 64; const x = c.getContext('2d');
@@ -180,13 +236,48 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
     } });
   });
 
-  // Cab (side outline measured on the photo)
-  reg('cab', part('cab', g => extrude(g, M.paint, [[.36, 1.25], [.38, 2.86], [1.85, 2.84], [2.06, 1.95], [2.10, 1.45], [2.08, .83]], 1.84, .1), [2.2, 1.8, 0], [0, 0, -.1], .12));
-  part('deflector', g => extrude(g, M.paint, [[.38, 2.84], [.38, 3.44], [.95, 3.46], [1.5, 3.12], [1.84, 2.9], [1.84, 2.84]], 1.4, .07), [.4, 2.9, 0], [0, 0, -.2], .16);
-  part('windshield', g => quad(g, M.glass, [2.0, 2.72, -.82], [2.0, 2.72, .82], [2.2, 1.98, .82], [2.2, 1.98, -.82]), [3.0, 2.6, 0], [0, 0, -.2], .14);
+  // Continuous pressed-metal cab profile, including a real curved wheel opening.
+  const cabProfile=new THREE.Shape();
+  cabProfile.moveTo(.30,.86);cabProfile.lineTo(.32,2.56);
+  cabProfile.bezierCurveTo(.32,2.80,.43,2.88,.64,2.89);
+  cabProfile.bezierCurveTo(1.02,2.92,1.56,2.94,1.76,2.87);
+  cabProfile.bezierCurveTo(1.88,2.82,1.93,2.67,1.96,2.51);
+  cabProfile.bezierCurveTo(2.03,2.22,2.14,1.99,2.17,1.72);
+  cabProfile.bezierCurveTo(2.20,1.47,2.19,1.14,2.12,.94);
+  cabProfile.quadraticCurveTo(2.10,.86,1.98,.86);cabProfile.lineTo(1.40,.86);
+  cabProfile.bezierCurveTo(1.37,1.09,1.16,1.22,.81,1.22);
+  cabProfile.bezierCurveTo(.50,1.22,.33,1.08,.30,.86);cabProfile.closePath();
+  reg('cab', part('cab', g => curvedPanel(g,M.paint,cabProfile,1.92,{bevel:.045,bow:.075}), [2.2, 1.8, 0], [0, 0, -.1], .12));
+  const deflectorProfile=new THREE.Shape();
+  deflectorProfile.moveTo(.38,2.87);deflectorProfile.lineTo(.39,3.27);
+  deflectorProfile.bezierCurveTo(.39,3.42,.47,3.49,.64,3.47);
+  deflectorProfile.bezierCurveTo(1.14,3.44,1.59,3.13,1.85,2.93);
+  deflectorProfile.quadraticCurveTo(1.88,2.88,1.75,2.86);
+  deflectorProfile.lineTo(.38,2.87);deflectorProfile.closePath();
+  part('deflector', g => curvedPanel(g,M.paint,deflectorProfile,1.4,{bevel:.055,bow:.05}), [.4, 2.9, 0], [0, 0, -.2], .16);
+  part('windshield', g => {
+    const shape=roundedPolygon([[-.82,-.36],[.82,-.36],[.78,.36],[-.78,.36]],.11);
+    const mesh=curvedPanel(g,M.glass,shape,.025,{bevel:0});
+    // Bow the glazing across its width and rake it into the rounded A pillars.
+    mesh.traverse(o=>{if(!o.geometry)return;const p=o.geometry.attributes.position;
+      for(let i=0;i<p.count;i++){const u=p.getX(i),v=p.getY(i),d=p.getZ(i);p.setXYZ(i,2.12-v*.25+.055*(1-(u/.84)**2)+d,2.35+v,u);}
+      o.geometry.computeVertexNormals();
+    });
+  }, [3.0, 2.6, 0], [0, 0, -.2], .14);
   [-1, 1].forEach(s => {
-    part('side-window', g => quad(g, M.glass, [.68, 1.87, s * 1.045], [1.85, 1.73, s * 1.045], [1.76, 2.6, s * 1.045], [.68, 2.65, s * 1.045]), [.5, .6, s * 2.5], [0, 0, 0], .1);
-    part('door-lower', g => { box(g, M.paint, [1.5, .9, .04], [1.2, 1.32, s * 1.05], .015); box(g, M.dark, [.2, .07, .05], [.8, 1.65, s * 1.085]); }, [.7, .35, s * 2.9], [0, s * .12, 0], .08);
+    part('side-window', g => {
+      const mesh=curvedPanel(g,M.glass,roundedPolygon([[.63,1.87],[1.82,1.76],[1.74,2.62],[.63,2.67]],.12),.025,{bevel:0});
+      mesh.position.z=s*1.035;
+    }, [.5, .6, s * 2.5], [0, 0, 0], .1);
+    part('door-lower', g => {
+      const shape=new THREE.Shape();shape.moveTo(.54,1.85);shape.lineTo(1.80,1.73);
+      shape.quadraticCurveTo(1.95,1.65,1.92,1.46);shape.lineTo(1.85,.94);shape.lineTo(1.44,.94);
+      shape.bezierCurveTo(1.34,1.20,1.14,1.27,.80,1.27);shape.quadraticCurveTo(.58,1.27,.54,1.14);shape.closePath();
+      curvedPanel(g,M.paint,shape,.03,{bevel:.006}).position.z=s*1.05;
+      box(g,M.dark,[.2,.065,.05],[.79,1.66,s*1.085],.022);
+      // Wheel-arch lip follows the tyre rather than outlining a rectangle over it.
+      contour(g,Array.from({length:49},(_,i)=>{const a=.15+(Math.PI-.3)*i/48;return [FRONT_X+.64*Math.cos(a),WR+.64*Math.sin(a),s*1.073];}));
+    }, [.7, .35, s * 2.9], [0, s * .12, 0], .08);
     part('mirror', g => { box(g, M.dark, [.05, .05, .5], [1.75, 2.4, s * 1.28]); box(g, M.dark, [.1, .58, .22], [1.75, 2.35, s * 1.56], .03); }, [1.8, .8, s * 2.3], [0, 0, 0], .13);
     part('step', g => box(g, M.steel, [.5, .06, .25], [.9, .78, s * 1.13]), [.3, -1.2, s * 1.6], [0, 0, 0], .14);
     part('headlight', g => { const h = box(g, M.lightW, [.06, .28, .42], [2.17, 1.4, s * .72], .02); const sp = new THREE.Sprite(flareMat); sp.userData.isFlare = true; h.add(sp); flares.push(sp); }, [3.4, .5, s * .8], [0, s * .3, 0], .1, { amp: .04 });
@@ -206,8 +297,22 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
   // Wheels
   [[FRONT_X, .84, 1], [FRONT_X, -.84, 1], [REAR_X, .84, 1], [REAR_X, -.84, 1], [REAR_X, .47, .6], [REAR_X, -.47, .6]].forEach(([x, z, k], i) => {
     part('wheel', g => {
-      cyl(g, M.tire, WR, .3, [x, WR, z], 'z', 32); cyl(g, M.rim, .32, .32, [x, WR, z], 'z', 24); cyl(g, M.steel, .11, .36, [x, WR, z], 'z', 16);
-      for (let b = 0; b < 8; b++) { const a = b / 8 * 6.283, bm = new THREE.Mesh(new THREE.CylinderGeometry(.022, .022, .34, 8), M.gal); bm.rotation.x = Math.PI / 2; bm.position.set(x + Math.cos(a) * .2, WR + Math.sin(a) * .2, z); g.add(bm); }
+      // Revolved tyre shoulder and rounded bead: smooth silhouette at any camera angle.
+      const profile=[new THREE.Vector2(.30,-.13),new THREE.Vector2(.39,-.16),new THREE.Vector2(.46,-.145),new THREE.Vector2(.50,-.105),new THREE.Vector2(WR,-.055),new THREE.Vector2(WR,.055),new THREE.Vector2(.50,.105),new THREE.Vector2(.46,.145),new THREE.Vector2(.39,.16),new THREE.Vector2(.30,.13)];
+      const path=new THREE.SplineCurve(profile);
+      const tireGeo=new THREE.LatheGeometry(path.getPoints(40),96);
+      const tire=new THREE.Mesh(tireGeo,M.tire);tire.rotation.x=Math.PI/2;tire.position.set(x,WR,z);g.add(tire);
+      const ring=(radius,offset)=>contour(g,Array.from({length:96},(_,i)=>{const a=i*Math.PI/48;return [x+radius*Math.cos(a),WR+radius*Math.sin(a),z+offset];}),true);
+      ring(WR,0);[-1,1].forEach(side=>{ring(.46,side*.145);ring(.32,side*.163);});
+      cyl(g,M.rim,.31,.30,[x,WR,z],'z');cyl(g,M.steel,.105,.34,[x,WR,z],'z');
+      for(let b=0;b<8;b++) {
+        const a=b*Math.PI/4;
+        const lug=new THREE.Mesh(new THREE.CylinderGeometry(.024,.024,.025,12),M.gal);
+        lug.rotation.x=Math.PI/2;lug.position.set(x+Math.cos(a)*.20,WR+Math.sin(a)*.20,z+Math.sign(z)*.17);g.add(lug);
+        // Circular ventilation apertures belong on the visible rim face only.
+        const cx=x+Math.cos(a)*.245,cy=WR+Math.sin(a)*.245;
+        contour(g,Array.from({length:24},(_,j)=>{const t=j*Math.PI/12;return [cx+.037*Math.cos(t),cy+.037*Math.sin(t),z+Math.sign(z)*.166];}),true);
+      }
     }, [(x > 0 ? 1.2 : -.8), -.05, Math.sign(z) * (2.5 * k)], [0, 0, Math.sign(z) * 1.6], .1 + i * .015, { amp: .05 });
   });
 
