@@ -185,10 +185,9 @@
       visual.style.opacity = r.photo.toFixed(3); bgfx3d.style.opacity = r.bg.toFixed(3); canvas3d.style.opacity = r.model === undefined ? '1' : r.model.toFixed(3);
       flash3d.style.opacity = r.flash.toFixed(3); flash3d.style.setProperty('--fx', r.fx.toFixed(1) + '%'); flash3d.style.setProperty('--fy', r.fy.toFixed(1) + '%');
     }
-    const stageIdx = p < .12 ? 0 : p < .30 ? 1 : p < .60 ? 2 : p < .86 ? 3 : 4;
+    const stageIdx = p < .12 ? 0 : p < .30 ? 1 : p < .62 ? 2 : p < .86 ? 3 : 4;
     hero.classList.toggle('is-end', p > .68);
     if (stageIdx !== lastStageIdx) { lastStageIdx = stageIdx; stageBtns.forEach((b, i) => b.toggleAttribute('aria-current', i === stageIdx)); }
-    stageBtns.forEach(b => b.style.setProperty('--f', range(p, +b.dataset.a, +b.dataset.b).toFixed(3)));
     const introOpacity = 1 - smooth(range(p,.03,.09));
     intro.style.opacity = introOpacity; intro.inert = introOpacity < .05;
     intro.style.transform = `translateY(${-(1-introOpacity)*12}px)`;
@@ -220,7 +219,6 @@
     heroVisible = rect.bottom > -60 && rect.top < innerHeight + 60;
     header.classList.toggle('on-light',rect.bottom<header.offsetHeight+50);
     if(!motionQuery.matches&&!frame)frame=requestAnimationFrame(tick);
-    document.body.classList.toggle('in-hero', rect.bottom > innerHeight * .35);
   }
   addEventListener('scroll',syncScroll,{passive:true});
   let resizeFrame;

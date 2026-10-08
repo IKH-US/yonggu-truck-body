@@ -262,18 +262,6 @@ p,li,dd{text-wrap:pretty}
 .section-pad{padding:96px 0}
 @media(max-width:640px){.section-pad{padding:64px 0}.section-title.compact{font-size:26px}.section-head{margin-bottom:28px}}
 
-/* Hero: stage navigation as a thin bottom progress bar. */
-.hero-timeline{display:none}
-.hero-stages{top:auto;bottom:20px;left:8%;right:8%;transform:none;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:0;border:0;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none}
-.hero-stages button{position:relative;min-height:44px;padding:14px 0 4px;border-radius:0;text-align:left;font-size:13px;color:#ffffff99;background:none}
-.hero-stages button i{position:absolute;left:0;right:0;top:0;height:3px;border-radius:2px;background:#ffffff26;overflow:hidden}
-.hero-stages button i::after{content:'';position:absolute;inset:0;background:var(--lime);transform:scaleX(var(--f,0));transform-origin:left}
-.hero-stages button[aria-current]{background:none;color:#fff;font-weight:700}
-.hero-bottom{bottom:84px}
-@media(max-width:640px){.hero-stages{left:16px;right:16px;bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:6px}.hero-stages button{font-size:12px;text-align:center}.hero .hero-bottom{bottom:calc(66px + env(safe-area-inset-bottom,0px))}}
-/* The fixed contact bar would cover the progress bar; the hero already has its own actions. */
-.mobile-contact{transition:transform .3s,opacity .3s}
-body.in-hero .mobile-contact{transform:translateY(130%);opacity:0;pointer-events:none}
 
 
 
