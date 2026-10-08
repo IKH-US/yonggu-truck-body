@@ -182,7 +182,7 @@
     if (!hero3d) heroScan?.render(p);
     if (hero3d && heroVisible && (p > .04 || last3dP > .04 || !warmed) && !(p > .94 && last3dP > .94)) {
       const r = hero3d.render(p); warmed = true; last3dP = p;
-      visual.style.opacity = r.photo.toFixed(3); bgfx3d.style.opacity = r.bg.toFixed(3); canvas3d.style.opacity = r.model.toFixed(3);
+      visual.style.opacity = r.photo.toFixed(3); bgfx3d.style.opacity = r.bg.toFixed(3); canvas3d.style.opacity = r.model === undefined ? '1' : r.model.toFixed(3);
       flash3d.style.opacity = r.flash.toFixed(3); flash3d.style.setProperty('--fx', r.fx.toFixed(1) + '%'); flash3d.style.setProperty('--fy', r.fy.toFixed(1) + '%');
     }
     const stageIdx = p < .12 ? 0 : p < .30 ? 1 : p < .60 ? 2 : p < .86 ? 3 : 4;

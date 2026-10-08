@@ -275,8 +275,7 @@ p,li,dd{text-wrap:pretty}
 .mobile-contact{transition:transform .3s,opacity .3s}
 body.in-hero .mobile-contact{transform:translateY(130%);opacity:0;pointer-events:none}
 
-/* 3D labels: one or two at a time; on phones only the first of each pair. */
-@media(max-width:640px){.c3d:nth-child(2),.c3d:nth-child(4),.c3d:nth-child(6){display:block}.c3d.second{display:none!important}}
+
 
 /* Services: image about 35%, text about 65%. */
 .service-side .service-image{width:35%}
