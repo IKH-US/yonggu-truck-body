@@ -4,8 +4,8 @@
   "description": "貨車車廂訂造、升降尾板加裝、改裝維修及配套。",
   "start_url": "./",
   "display": "browser",
-  "background_color": "#102b29",
-  "theme_color": "#102b29",
+  "background_color": "#161f25",
+  "theme_color": "#161f25",
   "lang": "zh-Hant-HK",
   "icons": [
     { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png" },
