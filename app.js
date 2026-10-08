@@ -168,13 +168,18 @@
   const q3d = new URLSearchParams(location.search).get('3d');
   const lowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
   if (q3d !== 'off' && (q3d === 'on' || !lowEnd) && !motionQuery.matches && !navigator.connection?.saveData && webglOk()) {
-    const start = () => import('./hero-3d.js?v=12').then(m => {
+    const start = () => import('./hero-3d.js?v=13').then(m => {
       heroScan?.render(0); photoFrame.style.transform = 'translate(-50%,-50%)';
       hero3d = m.createHero3D({ stage, canvas: canvas3d, labelsRoot: $('#hero3dLabels'), frameEl: photoFrame });
       hero.classList.add('has-3d');
       renderHero(heroProgress);
     }).catch(err => console.warn('3D hero unavailable, keeping the static hero.', err));
-    (window.requestIdleCallback || (f => setTimeout(f, 400)))(start, { timeout: 1500 });
+    // Building the scene costs several seconds of CPU on phones; the first 5% of the intro is the photo alone,
+    // so wait for the first scroll, touch or key press (or 6 s idle) before loading it.
+    let started = false;
+    const kick = () => { if (started) return; started = true; ['scroll', 'touchstart', 'pointerdown', 'keydown'].forEach(t => removeEventListener(t, kick)); start(); };
+    ['scroll', 'touchstart', 'pointerdown', 'keydown'].forEach(t => addEventListener(t, kick, { passive: true, once: true }));
+    setTimeout(() => (window.requestIdleCallback || (f => f()))(kick), 6000);
   }
 
   function renderHero(p) {
@@ -217,7 +222,8 @@
     const rect=hero.getBoundingClientRect();
     targetProgress=clamp(-rect.top/Math.max(1,hero.offsetHeight-stage.offsetHeight));
     heroVisible = rect.bottom > -60 && rect.top < innerHeight + 60;
-    header.classList.toggle('on-light',rect.bottom<header.offsetHeight+50);
+    const ft=document.querySelector('footer').getBoundingClientRect();
+    header.classList.toggle('on-light',rect.bottom<header.offsetHeight+50 && ft.top>header.offsetHeight+30);
     if(!motionQuery.matches&&!frame)frame=requestAnimationFrame(tick);
   }
   addEventListener('scroll',syncScroll,{passive:true});

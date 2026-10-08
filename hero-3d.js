@@ -38,6 +38,7 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.85;
+  scene.fog = new THREE.Fog(0x000000, 14, 40);
   const camera = new THREE.PerspectiveCamera(PHOTO.fov, PHOTO.w / PHOTO.h, 0.5, 200);
   const key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(9, 14, 10); scene.add(key);
   const rim = new THREE.DirectionalLight(0x58e0ff, .8); rim.position.set(-12, 7, -10); scene.add(rim);
@@ -170,7 +171,7 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
   const root = new THREE.Group(); scene.add(root);
   const parts = [];
   const tmpBox = new THREE.Box3(), tmpC = new THREE.Vector3();
-  const SPREAD = 1.3;
+  const SPREAD = 1.12;
   function part(name, build, dir, rot = [0, 0, 0], delay = 0, opts = {}) {
     const g = new THREE.Group(); g.name = name; build(g);
     let c;
@@ -232,7 +233,7 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
     if (s === 1) reg('shelf', sh);
     shelfYs.slice(0, 3).forEach((y, li) => { for (let b = 0; b < 4; b++) {
       const w = .34 + rnd() * .24, h = .22 + rnd() * .2, d = .3 + rnd() * .08, x = -7.0 + b * 1.75 + (rnd() - .5) * .2;
-      part('cargo', g => box(g, M.card, [w, h, d], [x, y + .015 + h / 2, s * .9]), [(rnd() - .5) * 2.0, .7 + rnd() * 1.0, s * (.5 + rnd() * 1.0)], [rnd() - .5, rnd() - .5, rnd() - .5], .15 + rnd() * .2, { amp: .09 });
+      part('cargo', g => box(g, M.card, [w, h, d], [x, y + .015 + h / 2, s * .9]), [(rnd() - .5) * 2.0, .7 + rnd() * 1.0, s * (.5 + rnd() * 1.0)], [(rnd() - .5) * .4, (rnd() - .5) * .4, (rnd() - .5) * .4], .15 + rnd() * .2, { amp: .05 });
     } });
   });
 
@@ -247,14 +248,28 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
   cabProfile.quadraticCurveTo(2.10,.86,1.98,.86);cabProfile.lineTo(1.40,.86);
   cabProfile.bezierCurveTo(1.37,1.09,1.16,1.22,.81,1.22);
   cabProfile.bezierCurveTo(.50,1.22,.33,1.08,.30,.86);cabProfile.closePath();
-  reg('cab', part('cab', g => curvedPanel(g,M.paint,cabProfile,1.92,{bevel:.045,bow:.075}), [2.2, 1.8, 0], [0, 0, -.1], .12));
+  let cabShell, deflShell;
+  reg('cab', part('cab', g => { cabShell = curvedPanel(g,M.paint,cabProfile,1.92,{bevel:.045,bow:.075}); }, [2.2, 1.8, 0], [0, 0, -.1], .12));
   const deflectorProfile=new THREE.Shape();
   deflectorProfile.moveTo(.38,2.87);deflectorProfile.lineTo(.39,3.27);
   deflectorProfile.bezierCurveTo(.39,3.42,.47,3.49,.64,3.47);
   deflectorProfile.bezierCurveTo(1.14,3.44,1.59,3.13,1.85,2.93);
   deflectorProfile.quadraticCurveTo(1.88,2.88,1.75,2.86);
   deflectorProfile.lineTo(.38,2.87);deflectorProfile.closePath();
-  part('deflector', g => curvedPanel(g,M.paint,deflectorProfile,1.4,{bevel:.055,bow:.05}), [.4, 2.9, 0], [0, 0, -.2], .16);
+  part('deflector', g => { deflShell = curvedPanel(g,M.paint,deflectorProfile,1.4,{bevel:.055,bow:.05}); }, [.4, 2.9, 0], [0, 0, -.2], .16);
+  // Rounded shells modelled in Blender from the same profiles (models/cab.json). The procedural shells stay as fallback.
+  const shellWarp = (geo, depth, bow) => { const a = geo.attributes.position; for (let i = 0; i < a.count; i++) { const x = a.getX(i), z = a.getZ(i); a.setX(i, x + bow * Math.max(0, 1 - Math.pow(z / (depth / 2 + .05), 2)) * smooth(clamp((x - .9) / 1.3))); } geo.computeVertexNormals(); };
+  fetch(new URL('./models/cab.json?v=1', import.meta.url)).then(r => r.ok ? r.json() : null).then(data => {
+    if (!data) return;
+    [[cabShell, data.cab, 1.92, .075], [deflShell, data.deflector, 1.4, .05]].forEach(([mesh, d, depth, bow]) => {
+      if (!mesh || !d) return;
+      const idx = d.index.slice(); for (let i = 0; i < idx.length; i += 3) { const t = idx[i + 1]; idx[i + 1] = idx[i + 2]; idx[i + 2] = t; }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(d.position, 3)); geo.setIndex(idx);
+      shellWarp(geo, depth, bow);
+      mesh.geometry.dispose(); mesh.geometry = geo;
+    });
+  }).catch(() => {});
   part('windshield', g => {
     const shape=roundedPolygon([[-.82,-.36],[.82,-.36],[.78,.36],[-.78,.36]],.11);
     const mesh=curvedPanel(g,M.glass,shape,.025,{bevel:0});
@@ -326,11 +341,11 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
     [-6.4, -3.6, -1.0].forEach(x => addSmall(g => box(g, M.lightA, [.1, .06, .12], [x, 1.32, s * 1.22], .01), x, 1.32, s * 1.22));
     addSmall(g => box(g, M.lightA, [.08, .05, .1], [-.2, 3.8, s * .8], .01), -.2, 3.8, s * .8);
   });
-  for (let i = 0; i < 12; i++) { const x = -7.8 + rnd() * 7.4, y = 1.5 + rnd() * 2.1, z = (rnd() > .5 ? 1 : -1) * 1.25; addSmall(g => cyl(g, M.gal, .03, .12, [x, y, z], 'z', 10), x, y, z); }
-  for (let i = 0; i < 8; i++) { const x = -7.4 + rnd() * 6.4, z = (rnd() - .5) * 1.9; addSmall(g => box(g, M.steel, [.16, .1, .13], [x, 1.14, z], .01), x, 1.14, z); }
+  if (false) for (let i = 0; i < 12; i++) { const x = -7.8 + rnd() * 7.4, y = 1.5 + rnd() * 2.1, z = (rnd() > .5 ? 1 : -1) * 1.25; addSmall(g => cyl(g, M.gal, .03, .12, [x, y, z], 'z', 10), x, y, z); }
+  if (false) for (let i = 0; i < 8; i++) { const x = -7.4 + rnd() * 6.4, z = (rnd() - .5) * 1.9; addSmall(g => box(g, M.steel, [.16, .1, .13], [x, 1.14, z], .01), x, 1.14, z); }
   smalls.forEach(([mk, x, y, z]) => {
-    const d = new THREE.Vector3(x, y, z).sub(centre); d.y += .8; d.normalize().multiplyScalar(1.6 + rnd() * 2.6);
-    part('small', g => mk(g), [d.x, d.y, d.z], [rnd() * 4 - 2, rnd() * 4 - 2, rnd() * 4 - 2], rnd() * .3, { amp: .1, raw: true });
+    const d = new THREE.Vector3(x, y, z).sub(centre); d.y += .8; d.normalize().multiplyScalar(1.2 + rnd() * 1.2);
+    part('small', g => mk(g), [d.x, d.y, d.z], [rnd() * 1.2 - .6, rnd() * 1.2 - .6, rnd() * 1.2 - .6], rnd() * .3, { amp: .06, raw: true });
   });
 
   /* ---------- floor, shadow, bounds ---------- */
@@ -429,7 +444,7 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
       m.color.lerpColors(u.col, GHOST_COL, .9);
       m.emissive.lerpColors(u.em, GHOST_EM, .6); m.emissiveIntensity = u.emI * (1 + s.flash * 5);
     }
-    wireMat.opacity = clamp(s.w * .6 * (s.wireK ?? 1)); accentMat.opacity = clamp(s.w * s.dm + s.w * .12); boundsMat.opacity = s.dm * .85 * (s.boundsK ?? 1); gridMat.opacity = s.dm * .5 * (s.boundsK ?? 1);
+    wireMat.opacity = clamp(s.w * .6 * (s.wireK ?? 1)); accentMat.opacity = clamp((s.w * s.dm + s.w * .12) * .45); boundsMat.opacity = s.dm * .85 * (s.boundsK ?? 1); gridMat.opacity = s.dm * .5 * (s.boundsK ?? 1);
     flareMat.opacity = clamp(s.flash * 1.15);
     flares.forEach(f => f.scale.set(lerp(.7, 5.6, s.flash), lerp(.22, 1.6, s.flash), 1));
     shadow.material.opacity = s.w * .5; floorMat.opacity = s.w;
@@ -446,11 +461,13 @@ export function createHero3D({ stage, canvas, labelsRoot, frameEl }) {
     target.set(lerp(T0.x, -3.4, e), lerp(T0.y, 3.0, e), T0.z * (1 - e));
     camera.position.set(target.x + Math.sin(az) * Math.cos(el) * dist, target.y + Math.sin(el) * dist, target.z + Math.cos(az) * Math.cos(el) * dist);
     camera.lookAt(target);
+    { const z = W < H ? lerp(1, 1.3, e) : 1; if (camera.zoom !== z) { camera.zoom = z; camera.updateProjectionMatrix(); } }
     bloom.strength = (.3 + s.w * .3) * (s.bloomK ?? 1) + s.flash * 1.3; bloom.radius = .55; bloom.threshold = 1.4;
     root.updateMatrixWorld(true);
     composer.render();
     const vis = clamp(range(p, .34, .40) * (1 - range(p, .60, .66)));
-    labels.forEach(l => {
+    labels.forEach((l, i) => {
+      const vis = clamp(range(p, .33 + i * .012, .36 + i * .012) * (1 - range(p, .60, .66)));
       const v = l.get().clone().project(camera);
       const x = (v.x * .5 + .5) * W, y = (-v.y * .5 + .5) * H;
       l.el.classList.toggle('l', x < W * .5); l.el.style.opacity = v.z < 1 ? vis.toFixed(3) : 0; l.el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
