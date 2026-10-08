@@ -168,7 +168,7 @@
   const q3d = new URLSearchParams(location.search).get('3d');
   const lowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
   if (q3d !== 'off' && (q3d === 'on' || !lowEnd) && !motionQuery.matches && !navigator.connection?.saveData && webglOk()) {
-    const start = () => import('./hero-3d.js').then(m => {
+    const start = () => import('./hero-3d.js?v=12').then(m => {
       heroScan?.render(0); photoFrame.style.transform = 'translate(-50%,-50%)';
       hero3d = m.createHero3D({ stage, canvas: canvas3d, labelsRoot: $('#hero3dLabels'), frameEl: photoFrame });
       hero.classList.add('has-3d');
